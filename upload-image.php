@@ -165,6 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     </div>
 </main>
+
 <?php
 //import footer
 require_once 'includes/footer.php';
