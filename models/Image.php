@@ -87,4 +87,41 @@ class Image
             return [];
         }
     }
+
+    public function getImageById($image_id)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE image_id = :image_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':image_id', $image_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return null;
+        }
+    }
+
+    public function deleteImage($image_id)
+    {
+        $query = "DELETE FROM " . $this->table_name . " WHERE image_id = :image_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':image_id', $image_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function getImagesByTitle($title)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE title LIKE :title";
+        $stmt = $this->conn->prepare($query);
+        $title = "%" . htmlspecialchars(strip_tags($title)) . "%";
+        $stmt->bindParam(':title', $title);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return [];
+        }
+    }
 }

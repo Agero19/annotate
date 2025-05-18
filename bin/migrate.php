@@ -5,14 +5,14 @@ $database = new Database();
 $serverPdo = $database->getServerConnection();
 
 try {
-    // Создание базы данных
+    // Db creation
     $serverPdo->exec("CREATE DATABASE IF NOT EXISTS `annotatex` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
     echo "✅ Database 'annotatex' ensured\n";
 
-    // Подключаемся к базе данных
+    // Connection
     $pdo = $database->getConnection();
 
-    // Создание таблиц
+    // Table creation
     $pdo->exec("
     CREATE TABLE IF NOT EXISTS users (
         user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -54,7 +54,7 @@ try {
 
     echo "✅ Tables created\n";
 
-    // Вставка тестовых данных
+    // Insert test data
     $passwordHash = password_hash('password123', PASSWORD_DEFAULT);
 
     $pdo->exec("
@@ -73,6 +73,6 @@ try {
 } catch (PDOException $e) {
     die("❌ Error during migration: " . $e->getMessage());
 } finally {
-    // Закрываем соединение
+    // Close the connection
     $database->closeConnection();
 }
