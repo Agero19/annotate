@@ -116,11 +116,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php if (isset($errors) && !empty($errors)): ?>
 
-              <div class="errorrs">
-                <?php foreach ($errors as $error): ?>
-                    <span><?php echo $error; ?></span>
-                <?php endforeach; ?>
-              </div>
+                <div class="errorrs">
+                    <?php foreach ($errors as $error): ?>
+                        <span><?php echo $error; ?></span>
+                    <?php endforeach; ?>
+                </div>
 
             <?php endif; ?>
 
@@ -156,13 +156,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="private">Private</option>
                     </select>
                 </div>
-                
+
                 <div class="d-flex justify-content-center mt-3">
                     <button type="submit" class="btn" name="submit">Upload Image</button>
                 </div>
             </form>
         </div>
-        </div>
+    </div>
     </div>
 </main>
 <?php
