@@ -685,3 +685,63 @@ body {
     width: 100%;
   }
 }
+
+/* Image Page */
+.image-page-wrap {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+#annotatable-image {
+  
+}
+.image-annotator {
+  width: 100%;
+}
+
+.image-annotator img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.sidebar-annotations {
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.annotation-dot {
+  background-color: rgba(225, 225, 225, 0.4);
+  transition: .25s;
+}
+
+.annotation-dot:hover {
+  background-color: rgba(225, 225, 225, 0.9);
+}
+
+.annotation-dot::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  top: -1px;
+  left: -1px;
+  box-shadow: 0 0 0 1px rgba(225, 225, 225, 0.8);
+  transition: .25s;
+}
+
+.annotation-dot:hover::after {
+  width: 16px;
+  height: 16px;
+  top: -2px;
+  left: -2px;
+}
+
+.annotation-comment {
+  background-color: #f0f8ff;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  position: relative;
+}

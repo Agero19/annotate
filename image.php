@@ -42,24 +42,23 @@ if ($image['visibility'] == 0 && (!isLoggedIn() || $_SESSION['user_id'] != $imag
 ?>
 
 <main class="container pt-5 mt-3">
-    <div class="row">
-        <div class="col-md-8">
+    <div class="d-flex image-page-wrap">
 
-            <!-- Image Itself -->
-            <div class="image-annotator" style="position: relative; display: inline-block;">
-                <img id="annotatable-image" src="uploads/images/<?= htmlspecialchars($image['image_url']) ?>"
-                    class="img-fluid" alt="<?= htmlspecialchars($image['title']) ?>"
-                    data-image-id="<?= $image['image_id'] ?>">
+        <!-- Image Itself -->
+        <div class="image-annotator" style="position: relative; display: inline-block;">
+            <img id="annotatable-image" src="uploads/images/<?= htmlspecialchars($image['image_url']) ?>"
+                class="img-fluid" alt="<?= htmlspecialchars($image['title']) ?>"
+                data-image-id="<?= $image['image_id'] ?>">
 
-                <div id="annotation-layer"
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
-                    <!-- Inserted circles with JS -->
-                </div>
+            <div id="annotation-layer"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                <!-- Inserted circles with JS -->
             </div>
         </div>
 
+
         <!-- Image Description -->
-        <div class="col-md-4">
+        <div class="sidebar-annotations">
             <h2><?= htmlspecialchars($image['title']) ?></h2>
             <p><strong>Author:</strong> <?= htmlspecialchars($image['username']) ?></p>
             <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($image['description'])) ?></p>
@@ -95,22 +94,20 @@ if ($image['visibility'] == 0 && (!isLoggedIn() || $_SESSION['user_id'] != $imag
                     <button type="submit" class="btn  mt-2">Add Annotation</button>
                 </form>
             <?php endif; ?>
+
+             <!-- Delete Image button -->
+            <?php if (isLoggedIn() && $_SESSION['user_id'] == $image['user_id']): ?>
+                <form method="post" action="delete-image.php"
+                    onsubmit="return confirm('Are you sure you want to delete this image?');">
+                    <input type="hidden" name="image_id" value="<?= $image['image_id'] ?>">
+                    <button type="submit" class="btn btn-danger mt-3">Delete Image</button>
+                </form>
+            <?php endif; ?>
         </div>
     </div>
-
-    <!-- Delete Image button -->
-    <?php if (isLoggedIn() && $_SESSION['user_id'] == $image['user_id']): ?>
-        <form method="post" action="delete-image.php"
-            onsubmit="return confirm('Are you sure you want to delete this image?');">
-            <input type="hidden" name="image_id" value="<?= $image['image_id'] ?>">
-            <button type="submit" class="btn mt-3">Delete Image</button>
-        </form>
-    <?php endif; ?>
 </main>
 
 <script>
-    // JavaScript to handle the annotation dots and comments
-    // Assuming you have a JSON object with annotations
     const annotations = <?= json_encode($annotations) ?>;
     let isAnnotating = false;
 
@@ -123,19 +120,24 @@ if ($image['visibility'] == 0 && (!isLoggedIn() || $_SESSION['user_id'] != $imag
         const yInput = document.getElementById('ann_y');
         const startBtn = document.getElementById('start-annotation');
 
-        // Показ точек
+        // Map to store dots by ID for later access
+        const dotMap = new Map();
+
         annotations.forEach(annot => {
             const dot = document.createElement('div');
             dot.className = 'annotation-dot';
+            dot.dataset.id = annot.annotation_id;
+
             dot.style.position = 'absolute';
-            dot.style.left = `${annot.x}px`;
-            dot.style.top = `${annot.y}px`;
+            dot.style.left = `${annot.x}%`;
+            dot.style.top = `${annot.y}%`;
             dot.style.width = '12px';
             dot.style.height = '12px';
-            dot.style.background = 'rgba(255, 0, 0, 0.5)';
             dot.style.borderRadius = '50%';
             dot.style.cursor = 'pointer';
             dot.style.pointerEvents = 'auto';
+            dot.style.transform = 'translate(-50%, -50%)';
+            dot.style.background = 'rgba(255, 0, 0, 0.5)';
 
             dot.addEventListener('click', () => {
                 comments.forEach(c => c.classList.remove('highlight'));
@@ -144,12 +146,33 @@ if ($image['visibility'] == 0 && (!isLoggedIn() || $_SESSION['user_id'] != $imag
                     targetComment.classList.add('highlight');
                     targetComment.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
+                setActiveDot(annot.annotation_id);
             });
 
             layer.appendChild(dot);
+            dotMap.set(annot.annotation_id, dot);
         });
 
-        // Включаем режим аннотирования
+        // Handle clicking annotation text
+        comments.forEach(comment => {
+            comment.addEventListener('click', () => {
+                comments.forEach(c => c.classList.remove('highlight'));
+                comment.classList.add('highlight');
+
+                const id = comment.dataset.id;
+                setActiveDot(id);
+            });
+        });
+
+        // Highlight dot by annotation ID
+        function setActiveDot(id) {
+            dotMap.forEach(dot => dot.classList.remove('active'));
+            const targetDot = dotMap.get(id);
+            if (targetDot) {
+                targetDot.classList.add('active');
+            }
+        }
+
         if (startBtn) {
             startBtn.addEventListener('click', () => {
                 isAnnotating = true;
@@ -158,17 +181,19 @@ if ($image['visibility'] == 0 && (!isLoggedIn() || $_SESSION['user_id'] != $imag
             });
         }
 
-        // Обработка клика по изображению
         image.addEventListener('click', function (e) {
             if (!isAnnotating) return;
 
             const rect = image.getBoundingClientRect();
-            const x = Math.round(e.clientX - rect.left);
-            const y = Math.round(e.clientY - rect.top);
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
 
-            if (x >= 0 && y >= 0 && x <= image.width && y <= image.height) {
-                xInput.value = x;
-                yInput.value = y;
+            const xPercent = (clickX / image.width) * 100;
+            const yPercent = (clickY / image.height) * 100;
+
+            if (xPercent >= 0 && yPercent >= 0 && xPercent <= 100 && yPercent <= 100) {
+                xInput.value = xPercent.toFixed(2);
+                yInput.value = yPercent.toFixed(2);
                 form.style.display = 'block';
                 form.scrollIntoView({ behavior: "smooth" });
                 isAnnotating = false;
