@@ -82,56 +82,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="pt-5 mt-3">
     <div class="container">
-        <div class="">
-            <h3 class="mb-0">Registration</h3>
-        </div>
-        <div class="">
+
+        <div class="form-wrap">
+            <div class="text-center">
+                <h2 class="">Registration</h2>
+            </div>
+
+
             <?php if (isset($errors) && !empty($errors)): ?>
-                <div class="">
-                    <ul class="mb-0">
-                        <?php foreach ($errors as $error): ?>
-                            <li><?php echo $error; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
+
+              <div class="errorrs">
+                <?php foreach ($errors as $error): ?>
+                    <span><?php echo $error; ?></span>
+                <?php endforeach; ?>
+              </div>
+
             <?php endif; ?>
 
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
 
-                <div class="mb-3">
-                    <label for="username" class="">Username</label>
-                    <input type="text" class="" id="username" name="username"
+                <div class="d-flex align-items-center flex-column mt-2">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control mt-1" id="username" name="username"
                         value="<?php echo isset($username) ? $username : ''; ?>" required>
-                    <div class="">Username can contain only letters, numbers and underscores.</div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="email" class="">Email</label>
-                    <input type="email" class="" id="email" name="email"
+                <div class="d-flex align-items-center flex-column mt-2">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control mt-1" id="email" name="email"
                         value="<?php echo isset($email) ? $email : ''; ?>" required>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="">
-                        <label for="password" class="">Password</label>
-                        <input type="password" class="" id="password" name="password" required>
-                        <div class="">Password has to contain at least 6 characters.</div>
+                    <div class="d-flex align-items-center flex-column mt-2">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control mt-1" id="password" name="password" required>
                     </div>
-                    <div class="">
-                        <label for="confirm_password" class="">Confirm password</label>
-                        <input type="password" class="" id="confirm_password" name="confirm_password" required>
+                    <div class="d-flex align-items-center flex-column mt-2">
+                        <label for="confirm_password" class="form-label">Confirm password</label>
+                        <input type="password" class="form-control mt-1" id="confirm_password" name="confirm_password" required>
                     </div>
-                </div>
 
-                <div class="">
-                    <button type="submit" class="">Register</button>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn">Register</button>
                 </div>
             </form>
 
-            <div class="mt-4">
+            <div class="mt-3 d-flex align-items-center flex-column">
                 <p>Already have an account? <a href="login.php">Log in</a></p>
             </div>
+        </div>
         </div>
     </div>
 </div>

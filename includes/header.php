@@ -83,6 +83,13 @@ $current_user = isLoggedIn() ? getCurrentUser() : null;
                     </ul>
                 </nav>
 
+                <!-- Upload Button -->
+                 <?php if ($page_title === "Uploads"): ?>
+                    <div class="user-name">
+                        <a href="upload-image.php" class="btn">Add an Image</a>
+                    </div>
+                <?php endif; ?>
+
                 <!-- Search -->
                 <div class="search-container">
                     <input type="text" id="search" placeholder="Search..." />

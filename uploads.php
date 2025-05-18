@@ -45,10 +45,6 @@ $user_images = $image->getUserImages($_SESSION['user_id']);
             <?php endif; ?>
         </ul>
     </div>
-
-    <div>
-        <button><a href="upload-image.php">Upload an Image</a></button>
-    </div>
 </main>
 
 
