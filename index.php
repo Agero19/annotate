@@ -24,7 +24,8 @@ $public_images = $image->getPublicImages(9);
                 <?php foreach ($public_images as $image_item): ?>
 
                     <li class="grid-item">
-                        <a href="<?php echo 'uploads/images/' . $image_item['image_url']; ?>" class="img-wrap">
+                        <a href="image.php?id=<?= $image_item['image_id'] ?>" class="img-wrap">
+
 
                             <img src="<?php echo !empty($image_item['image_url']) ? 'uploads/images/' . $image_item['image_url'] : 'assets/images/image_placeholder.webp'; ?>"
                                 alt="<?php echo $image_item['title'] ?>">
