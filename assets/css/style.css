@@ -5,6 +5,32 @@
   margin: 0;
 }
 
+.d-b {
+  display: block;
+}
+.text-center {
+  text-align: center;
+}
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.d-none {
+  display: none;
+}
+
 html,
 body {
   height: 100%;
@@ -19,6 +45,9 @@ body {
 
 .mt-1 {
   margin-top: 12px;
+}
+.ms-1 {
+  margin-left: 12px;
 }
 .mt-2 {
   margin-top: 24px;
@@ -119,7 +148,8 @@ body {
   position: relative;
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: 24px;
 }
 
 #search {
@@ -392,11 +422,85 @@ body {
   font-weight: 600;
 }
 
+/* Button */
+
+.btn {
+  display: inline-block;
+  padding: 6px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #747475;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  border: 0;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #585757;
+}
+
+/* Forms  */
+
+.form-control:not([type="checkbox"]) {
+  display: block;
+  width: 100%;
+  padding: 4px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  text-align: center;
+}
+
+.form-control:not([type="checkbox"]):focus {
+  border-color: #8b8a8a;
+}
+
+.custom-file-upload {
+
+}
+
+.custom-file-upload:hover {
+  background-color: #0056b3;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+/* Login Form */
+
+.form-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.errorrs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: red;
+}
+
 /* Footer */
 
 .footer {
-  background: #ccc;
-  color: white;
+  color: #ccc;
   text-align: center;
   padding: 1rem;
+  box-shadow: 0px 0px 28px -7px rgba(0, 0, 0, 0.1);
+}
+
+.footer h3 {
+  font-weight: 300;
 }

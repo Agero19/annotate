@@ -83,48 +83,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="pt-5 mt-3">
     <div class="container">
-        <div class="">
-            <h3 class="">Log into account</h3>
-        </div>
-        <div class="">
-            <?php if (isset($errors) && !empty($errors)): ?>
-                <div class="">
-                    <ul class="">
-                        <?php foreach ($errors as $error): ?>
-                            <li><?php echo $error; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            <?php endif; ?>
+        <div class="form-wrap">
+            <div class="text-center">
+                <h2 class="">Log into account</h2>
+            </div>
 
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-                <div class="">
-                    <label for="username" class="form-label">Username or email</label>
-                    <input type="text" class="" id="username" name="username"
-                        value="<?php echo isset($username) ? $username : ''; ?>" required>
-                </div>
+                <?php if (isset($errors) && !empty($errors)): ?>
 
-                <div class="">
-                    <label for="password" class="">Password</label>
-                    <input type="password" class="" id="password" name="password" required>
-                </div>
+                    <div class="errorrs">
+                      <?php foreach ($errors as $error): ?>
+                          <span><?php echo $error; ?></span>
+                      <?php endforeach; ?>
+                    </div>
 
-                <div class="">
-                    <input type="checkbox" class="" id="remember" name="remember">
-                    <label class="" for="remember">Remember me</label>
-                </div>
+                <?php endif; ?>
 
-                <div class="">
-                    <button type="submit" class="">Log in</button>
-                </div>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                    <div class="d-flex align-items-center flex-column mt-2">
+                      <label for="username" class="form-label">Username or email</label>
+                      <input type="text" class="form-control mt-1" id="username" name="username"
+                          value="<?php echo isset($username) ? $username : ''; ?>" required>
+                    </div>
 
-                <div class="mt-3">
-                    <a href="reset-password.php">Forgot password?</a>
-                </div>
-            </form>
+                    <div class="d-flex align-items-center flex-column mt-2">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control mt-1" id="password" name="password" required>
+                    </div>
 
-            <div class="mt-4">
-                <p>Don't have an account? <a href="register.php">Register</a></p>
+                    <div class="mt-2 d-flex justify-content-center">
+                        <input type="checkbox" class="form-control" id="remember" name="remember">
+                        <label class="form-label ms-1" for="remember">Remember me</label>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" class="btn">Log in</button>
+                    </div>
+                </form>
+                
+                <div class="mt-3 d-flex align-items-center flex-column">
+                  <a href="reset-password.php" class="d-none">Forgot password?</a>
+
+                    <p class="mt-1">Don't have an account? <a href="register.php">Register</a></p>
+                </div>
             </div>
         </div>
     </div>

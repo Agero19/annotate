@@ -106,57 +106,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <main class="pt-5 mt-3">
     <div class="container">
-        <div class="">
-            <h3 class="mb-0">Upload Image</h3>
-        </div>
-        <div class="">
-            <?php if (isset($_SESSION['success_message'])): ?>
-                <div class="alert alert-success">
-                    <?= $_SESSION['success_message'] ?> 😊
-                </div>
-                <?php unset($_SESSION['success_message']); ?>
-            <?php endif; ?>
+
+
+        <div class="form-wrap">
+            <div class="text-center">
+                <h2 class="">Upload Image</h2>
+            </div>
+
 
             <?php if (isset($errors) && !empty($errors)): ?>
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        <?php foreach ($errors as $error): ?>
-                            <li><?= $error ?> ❌</li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
+
+              <div class="errorrs">
+                <?php foreach ($errors as $error): ?>
+                    <span><?php echo $error; ?></span>
+                <?php endforeach; ?>
+              </div>
+
             <?php endif; ?>
 
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
                 enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="title" class="">Title</label>
-                    <input type="text" class="" id="title" name="title"
+
+                <div class="d-flex align-items-center flex-column mt-2">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control mt-1" id="title" name="title"
                         value="<?php echo isset($title) ? $title : ''; ?>">
                 </div>
 
-                <div class="mb-3">
-                    <label for="description" class="">Description</label>
-                    <textarea name="description" id="description"
+                <div class="d-flex align-items-center flex-column mt-2">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="description" id="description" class="form-control mt-1"
                         rows="5"><?php echo isset($description) ? $description : ''; ?></textarea>
                 </div>
 
-                <div class="mb-3">
-                    <label for="image" class="">Image</label>
-                    <input type="file" name="image" id="image">
+                <div class="d-flex align-items-center flex-column mt-2">
+                    <label for="image" class="form-label">Image</label>
+
+                    <label class="custom-file-upload btn mt-1">
+                        <input type="file" name="image" id="image" />
+                        Choose File
+                    </label>
                 </div>
 
-                <div class="mb-3">
-                    <label for="visibility">Visibility</label>
-                    <select name="visibility" id="visibility">
+                <div class="d-flex align-items-center flex-column mt-2">
+                    <label for="visibility" class="form-label">Visibility</label>
+                    <select name="visibility" class="form-control mt-1" id="visibility">
                         <option value="">Select visibility</option>
                         <option value="public">Public</option>
                         <option value="private">Private</option>
                     </select>
                 </div>
-
-                <button type="submit" name="submit">Upload Image</button>
+                
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn" name="submit">Upload Image</button>
+                </div>
             </form>
+        </div>
         </div>
     </div>
 </main>
